@@ -1,6 +1,7 @@
 var editor = ace.edit("editor");
 editor.setTheme("ace/theme/ambiance");
 editor.getSession().setMode("ace/mode/abap");
+editor.setShowPrintMargin(false);
 
 $('#theme').change('change', function() {
 	var theme = $(this).val();
