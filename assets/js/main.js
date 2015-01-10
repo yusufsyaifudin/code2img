@@ -48,15 +48,23 @@ function render2img()
 			image.src = canvas.toDataURL("image/png"); // This should be image/png as browsers (only) support it (to biggest compatibilty)
 			// Append image (yes, it is a DOM element!) to the DOM and etc here..
 
-			canvas.toBlob(function(blob) {
-
-				var time = new Date().getTime(); // get timestamps
-				saveAs(blob, "mycode_" + time + ".png");
-			});
-
 			$('#result').empty();
-			$('#result').html('<div class="alert alert-success">Here\'s your code in image version. You can right-click and save image.</div>' +
+
+			try {
+				canvas.toBlob(function(blob) {
+
+					var time = new Date().getTime(); // get timestamps
+					saveAs(blob, "mycode_" + time + ".png");
+				});
+
+				$('#result').html('<div class="alert alert-success">Here\'s your code in image version. You can right-click and save image.</div>' +
 				'<img src="' + image.src + '" alt="code image"><br><br><br><br><br><br>');
+			} catch (e) {
+				console.log(e)
+				$('#result').html('<div class="alert alert-danger">Your browser not support canvas.toBlob() function. Right-click image below and save to image.</div><div class="alert alert-success">Here\'s your code in image version. You can right-click and save image.</div>' +
+				'<img src="' + image.src + '" alt="code image"><br><br><br><br><br><br>');
+			}
+			
 			//console.log(image.src);
 		}
 	});
